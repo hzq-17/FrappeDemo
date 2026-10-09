@@ -1,0 +1,86 @@
+# ---------------------------------------------------------------------------
+# user_growth 演示环境：mariadb + redis(cache/queue) + bench
+#   启动：docker compose up -d --build
+#   日志：docker compose logs -f bench
+#   访问：http://localhost:8000/app/growth-dashboard
+# ---------------------------------------------------------------------------
+name: frappe-demo
+
+services:
+  mariadb:
+    image: ${MARIADB_IMAGE:-mariadb:10.6}
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --skip-character-set-client-handshake
+      --max_allowed_packet=64M
+      --innodb-buffer-pool-size=512M
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 30s
+    restart: unless-stopped
+
+  redis-cache:
+    image: ${REDIS_IMAGE:-redis:6.2-alpine}
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    restart: unless-stopped
+
+  redis-queue:
+    image: ${REDIS_IMAGE:-redis:6.2-alpine}
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    restart: unless-stopped
+
+  bench:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-debian:bookworm-slim}
+        FRAPPE_BRANCH: ${FRAPPE_BRANCH:-version-15}
+        APT_MIRROR: ${APT_MIRROR:-deb.debian.org}
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.org/simple}
+        PIP_EXTRA_INDEX_URL: ${PIP_EXTRA_INDEX_URL:-}
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+        INSTALL_BROWSER: ${INSTALL_BROWSER:-1}
+        UG_HTTP_PROXY: ${BUILD_HTTP_PROXY:-}
+        UG_HTTPS_PROXY: ${BUILD_HTTPS_PROXY:-}
+    image: frappe-demo/bench:${FRAPPE_BRANCH:-version-15}
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis-cache:
+        condition: service_started
+      redis-queue:
+        condition: service_started
+    environment:
+      SITE_NAME: ${SITE_NAME:-growth.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+      DB_HOST: mariadb
+      REDIS_CACHE: redis-cache
+      REDIS_QUEUE: redis-queue
+      SEED_DATA: ${SEED_DATA:-1}
+      SEED_MONTHS: ${SEED_MONTHS:-24}
+      SEED_RESET: ${SEED_RESET:-0}
+    ports:
+      - "${HTTP_PORT:-8000}:8000"
+      - "${SOCKETIO_PORT:-9000}:9000"
+    volumes:
+      - ./:/workspace
+      - bench-sites:/home/frappe/frappe-bench/sites
+    working_dir: /home/frappe/frappe-bench
+    entrypoint: ["/bin/bash", "/workspace/docker/entrypoint.sh"]
+    init: true
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  mariadb-data:
+  bench-sites:

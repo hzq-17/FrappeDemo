@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>Desk 页面渲染自检</title>
+<link rel="stylesheet" href="../../user_growth/user_growth/public/css/growth_screen.css" />
+<style>
+	html, body { margin: 0; padding: 0; height: 100%; background: #f2f6fc; }
+	#ug-page-root { height: 100vh; }
+	.ug-stage { height: 100vh !important; }
+</style>
+</head>
+<body>
+<div id="ug-page-root" style="height:100vh"></div>
+
+<!--
+  这个页面用 headless 浏览器验证"真实 Desk 页面"的渲染：
+  1. page_script.js 是服务端 desk_page.get() 拼装出来的真实脚本（含 HTML 模板 + 页面 JS）；
+  2. 下面这层 frappe 垫片只实现页面脚本用到的那几个 API；
+  3. 大屏模块走真实 bundle（script 标签直接加载 IIFE 产物）。
+  于是"模板缺失 / 挂载点不匹配 / 脚本报错"都会在这里暴露成空白 DOM。
+-->
+<script>
+window.__ = function (text) { return text; };
+window.frappe = {
+	pages: {},
+	templates: {},
+	boot: { assets_json: {}, sysdefaults: { currency: "CNY", float_precision: 2 } },
+	session: { user: "Administrator" },
+	ui: {
+		make_app_page: function (options) {
+			var host = options.parent;
+			var main = document.createElement("div");
+			main.className = "layout-main-section";
+			var head = document.createElement("div");
+			head.className = "page-head";
+			host.appendChild(head);
+			host.appendChild(main);
+			return { main: main, body: main, page: { set_indicator: function () {} } };
+		},
+	},
+	render_template: function (name) {
+		return frappe.templates[name] || "";
+	},
+	require: function (paths, callback) {
+		if (callback) {
+			callback();
+		}
+	},
+	datetime: {
+		get_today: function () { return new Date().toISOString().slice(0, 10); },
+		add_days: function (value, days) {
+			var date = new Date(value);
+			date.setDate(date.getDate() + days);
+			return date.toISOString().slice(0, 10);
+		},
+		add_months: function (value, months) {
+			var date = new Date(value);
+			date.setMonth(date.getMonth() + months);
+			return date.toISOString().slice(0, 10);
+		},
+	},
+	utils: { escape_html: function (text) { return String(text); } },
+	dom: { freeze: function () {}, unfreeze: function () {} },
+	msgprint: function () {},
+	call: function (options) {
+		load_snapshot().then(function (snapshot) {
+			var data = (snapshot || {}).data || {};
+			var method = options.method || "";
+			var payload = snapshot;
+			if (method.indexOf("get_dashboard_data") > 0) {
+				payload = snapshot;
+			} else if (method.indexOf("get_kpi_summary") > 0) {
+				payload = copy(snapshot, data.kpi);
+			} else if (method.indexOf("get_trend_series") > 0) {
+				payload = copy(snapshot, data.trend);
+			} else if (method.indexOf("get_event_feed") > 0) {
+				payload = copy(snapshot, data.events || []);
+			} else if (method.indexOf("get_region_breakdown") > 0) {
+				payload = copy(snapshot, {
+					region: "全部",
+					kpi: data.kpi,
+					province: (data.distribution || {}).province || [],
+					channel: (data.distribution || {}).channel || [],
+					plan: (data.distribution || {}).plan || [],
+				});
+			}
+			if (options.callback) options.callback({ message: payload });
+		}).catch(function (error) {
+			if (options.error) options.error({ message: String(error) });
+		});
+	},
+};
+
+// jQuery 垫片：页面脚本只用到这几个方法
+window.$ = function (target) {
+	var element = typeof target === "string" ? document.querySelector(target) : target;
+	return {
+		find: function (selector) { return window.$(element ? element.querySelector(selector) : null); },
+		addClass: function (name) { if (element) element.classList.add(name); return this; },
+		html: function (html) { if (element) element.innerHTML = html; return this; },
+		empty: function () { if (element) element.innerHTML = ""; return this; },
+		on: function () { return this; },
+	};
+};
+
+function copy(snapshot, data) {
+	return {
+		code: 0, msg: "preview", cached: true,
+		generated_at: snapshot ? snapshot.generated_at : null,
+		caliber: snapshot ? snapshot.caliber : null,
+		data: data,
+	};
+}
+
+var SNAPSHOT = null;
+function load_snapshot() {
+	if (SNAPSHOT) return Promise.resolve(SNAPSHOT);
+	return fetch("dashboard.json", { cache: "no-store" })
+		.then(function (response) { return response.json(); })
+		.then(function (json) { SNAPSHOT = json; return json; });
+}
+
+// 关键：页面脚本的写法是 frappe.pages["<name>"].on_page_load = ...，
+// 因此必须在加载页面脚本之前就把 wrapper 注册进去（框架由 frappe.container.add_page 完成）。
+frappe.pages["growth-dashboard"] = document.getElementById("ug-page-root");
+</script>
+
+<!-- 真实前端模块（与 Desk 页面加载的是同一份 bundle 产物） -->
+<script src="../../user_growth/user_growth/public/js/growth_screen/format.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/api.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/charts.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/layout.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/screen.js"></script>
+
+<!-- 服务端 desk_page.get() 拼装出来的真实页面脚本（模板 + 页面 JS） -->
+<script src="page_script.js"></script>
+
+<script>
+(function () {
+	var wrapper = frappe.pages["growth-dashboard"] || document.getElementById("ug-page-root");
+	// 复刻框架顺序：注册 wrapper → eval 页面脚本 → trigger_page_event("on_page_load")
+	if (typeof wrapper.on_page_load !== "function") {
+		wrapper.innerHTML = '<p style="color:#dc2626;font-size:16px">页面脚本没有注册 on_page_load</p>';
+		return;
+	}
+	try {
+		wrapper.on_page_load(wrapper);
+	} catch (error) {
+		wrapper.innerHTML = '<p style="color:#dc2626;font-size:16px">页面脚本执行异常：' + String(error) + "</p>";
+	}
+
+	setTimeout(function () {
+		var canvas = document.querySelector(".ug-canvas");
+		var diagnostics = {
+			kpiCards: document.querySelectorAll(".ug-kpi__card").length,
+			panels: document.querySelectorAll(".ug-panel").length,
+			svgCount: document.querySelectorAll("svg").length,
+			hasMountPoint: !!document.getElementById("ug-root"),
+			emptyRoot: !!(document.getElementById("ug-root") || {}).textContent &&
+				(document.getElementById("ug-root").textContent.indexOf("正在加载增长数据") >= 0),
+			explicitError: /加载失败|执行异常/.test(wrapper.innerHTML),
+			canvasWidth: canvas ? Math.round(canvas.getBoundingClientRect().width) : 0,
+		};
+		var node = document.createElement("div");
+		node.id = "ug-page-diagnostics";
+		node.textContent = JSON.stringify(diagnostics);
+		node.style.cssText = "position:fixed;left:-10000px;top:0;white-space:pre;";
+		document.body.appendChild(node);
+	}, 1200);
+})();
+</script>
+</body>
+</html>

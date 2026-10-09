@@ -1,0 +1,18 @@
+<!--
+  增长大屏页面骨架。
+
+  框架在 Page.load_assets() 时读取本文件，注册为 frappe.templates["growth_dashboard"]，
+  页面脚本用 frappe.render_template("growth_dashboard", {}) 取出并挂到 page.main 上。
+
+  两个硬约束（框架的 html_to_js_template 会把本文件塞进一个单引号 JS 字符串）：
+    1. 全文不能出现 ASCII 单引号 —— 会直接破坏 JS 字符串，导致整页白屏；
+       需要引用时请用双引号或中文引号。
+    2. HTML 注释会被去掉、所有换行与缩进会被压成单个空格，因此不要依赖格式。
+-->
+<div class="ug-screen" id="ug-root" data-state="loading">
+	<div class="ug-stage">
+		<div class="ug-canvas" style="align-items:center;justify-content:center;color:#5F6E88;font-size:18px">
+			正在加载增长数据…
+		</div>
+	</div>
+</div>

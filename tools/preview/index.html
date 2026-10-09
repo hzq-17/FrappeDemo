@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>增长大屏 · 离线预览</title>
+<link rel="stylesheet" href="../../user_growth/user_growth/public/css/growth_screen.css" />
+<style>
+	html, body { margin: 0; padding: 0; height: 100%; background: #f2f6fc; }
+	#ug-root { height: 100vh; }
+	.ug-stage { height: 100vh !important; }
+	.ug-preview-hint {
+		position: fixed; right: 12px; bottom: 10px; z-index: 50;
+		font-size: 12px; color: #6f7e99;
+		background: #ffffff; border: 1px solid #e3eaf6;
+		padding: 4px 10px; border-radius: 6px;
+		box-shadow: 0 2px 8px rgba(22,35,63,.06);
+	}
+</style>
+</head>
+<body>
+<div class="ug-screen" id="ug-root" data-state="loading">
+	<div class="ug-stage">
+		<div class="ug-canvas" style="align-items:center;justify-content:center;color:#6F7E99;font-size:18px">
+			正在加载预览数据…
+		</div>
+	</div>
+</div>
+<div class="ug-preview-hint">离线预览 · 数据来自 dashboard.json 快照</div>
+
+<!-- frappe 运行时垫片：让大屏脚本在纯静态环境下复用同一套渲染逻辑 -->
+<script>
+window.frappe = {
+	call: function (options) {
+		load_snapshot().then(function (snapshot) {
+			var method = options.method || "";
+			var payload = null;
+			var data = (snapshot || {}).data || {};
+			if (method.indexOf("get_dashboard_data") > 0) {
+				payload = snapshot;
+			} else if (method.indexOf("get_kpi_summary") > 0) {
+				payload = copy(snapshot, data.kpi);
+			} else if (method.indexOf("get_trend_series") > 0) {
+				payload = copy(snapshot, data.trend);
+			} else if (method.indexOf("get_event_feed") > 0) {
+				payload = copy(snapshot, data.events || []);
+			} else if (method.indexOf("get_region_breakdown") > 0) {
+				payload = copy(snapshot, {
+					region: "全部",
+					kpi: data.kpi,
+					province: (data.distribution || {}).province || [],
+					channel: (data.distribution || {}).channel || [],
+					plan: (data.distribution || {}).plan || [],
+				});
+			} else {
+				payload = { code: 0, msg: "preview", data: null };
+			}
+			if (options.callback) options.callback({ message: payload });
+		}).catch(function (error) {
+			if (options.error) options.error({ message: String(error) });
+		});
+	},
+	datetime: {
+		get_today: function () { return new Date().toISOString().slice(0, 10); },
+		add_days: function (value, days) {
+			var d = new Date(value); d.setDate(d.getDate() + days);
+			return d.toISOString().slice(0, 10);
+		},
+		add_months: function (value, months) {
+			var d = new Date(value); d.setMonth(d.getMonth() + months);
+			return d.toISOString().slice(0, 10);
+		},
+	},
+	utils: { escape_html: function (text) { return String(text); } },
+	user: { has_role: function () { return true; } },
+};
+
+function copy(snapshot, data) {
+	return {
+		code: 0, msg: "preview", cached: true,
+		generated_at: snapshot ? snapshot.generated_at : null,
+		caliber: snapshot ? snapshot.caliber : null,
+		data: data,
+	};
+}
+
+var SNAPSHOT = null;
+function load_snapshot() {
+	if (SNAPSHOT) return Promise.resolve(SNAPSHOT);
+	return fetch("dashboard.json", { cache: "no-store" })
+		.then(function (response) { return response.json(); })
+		.then(function (json) { SNAPSHOT = json; return json; });
+}
+</script>
+
+<script src="../../user_growth/user_growth/public/js/growth_screen/format.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/api.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/charts.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/layout.js"></script>
+<script src="../../user_growth/user_growth/public/js/growth_screen/screen.js"></script>
+<script>
+window.user_growth.screen.mount(document.getElementById("ug-root"), { preview: true });
+
+// ---- 仅预览页使用的布局自检（把测量结果写进 DOM，便于 headless 校验） ----
+setTimeout(function () {
+	var canvas = document.querySelector(".ug-canvas");
+	var stage = document.querySelector(".ug-stage");
+	var overflow = 0;
+	var canvasRect = canvas.getBoundingClientRect();
+	document.querySelectorAll(".ug-canvas *").forEach(function (element) {
+		var rect = element.getBoundingClientRect();
+		if (rect.width && (rect.right > canvasRect.right + 1 || rect.bottom > canvasRect.bottom + 1)) {
+			overflow += 1;
+		}
+	});
+	var transform = canvas.style.transform || "";
+	var scale = parseFloat((transform.match(/scale\(([^)]+)\)/) || [0, "0"])[1]);
+	var clipped = [];
+	document.querySelectorAll(".ug-panel__body, .ug-kpi__card").forEach(function (element) {
+		var delta = element.scrollHeight - element.clientHeight;
+		if (delta > 1) {
+			var owner = element.closest("[data-panel]");
+			clipped.push({
+				panel: (owner && owner.getAttribute("data-panel")) || element.getAttribute("data-kpi") || "kpi",
+				delta: delta,
+			});
+		}
+	});
+
+	// 对比度自检：亮色主题下必须保证文字可读（正文 ≥ 4.5:1，大号数字 ≥ 3:1）
+	function parseColor(value) {
+		var match = String(value || "").match(/rgba?\(([^)]+)\)/);
+		if (!match) return null;
+		var parts = match[1].split(",").map(function (item) { return parseFloat(item); });
+		return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+	}
+	function relLuminance(color) {
+		var channels = [color.r, color.g, color.b].map(function (value) {
+			value = value / 255;
+			return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+		});
+		return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+	}
+	function effectiveBackground(element) {
+		var node = element;
+		while (node && node !== document.documentElement) {
+			var color = parseColor(window.getComputedStyle(node).backgroundColor);
+			if (color && color.a > 0.5) return color;
+			node = node.parentElement;
+		}
+		return { r: 255, g: 255, b: 255 };
+	}
+	function contrastRatio(element) {
+		var foreground = parseColor(window.getComputedStyle(element).color);
+		if (!foreground) return null;
+		var background = effectiveBackground(element);
+		var first = relLuminance(foreground);
+		var second = relLuminance(background);
+		return Math.round(((Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05)) * 100) / 100;
+	}
+	var contrastChecks = [];
+	[
+		[".ug-kpi__label", 4.5],
+		[".ug-kpi__hint", 4.5],
+		[".ug-kpi__number", 3],
+		[".ug-panel__title", 4.5],
+		[".ug-panel__hint", 4.5],
+		[".ug-rank__name", 4.5],
+		[".ug-legend__name", 4.5],
+		[".ug-accounts__name", 4.5],
+		[".ug-accounts__meta", 4.5],
+		[".ug-footer__caliber", 4.5],
+	].forEach(function (entry) {
+		var element = document.querySelector(entry[0]);
+		if (element) {
+			contrastChecks.push({ selector: entry[0], ratio: contrastRatio(element), min: entry[1] });
+		}
+	});
+	var diagnostics = {
+		scale: Number(scale.toFixed(4)),
+		canvasWidth: Math.round(canvasRect.width),
+		canvasHeight: Math.round(canvasRect.height),
+		stageHeight: Math.round(stage.getBoundingClientRect().height),
+		viewport: [window.innerWidth, window.innerHeight],
+		documentHeight: document.documentElement.scrollHeight,
+		overflowElements: overflow,
+		svgCount: document.querySelectorAll("svg").length,
+		clippedPanels: clipped,
+		contrast: contrastChecks,
+		// 主题自检：底色亮度必须"亮"（深色主题会直接失败）
+		backgroundLuminance: {
+			screen: Math.round(relLuminance(effectiveBackground(document.querySelector(".ug-screen"))) * 1000) / 1000,
+			panel: Math.round(relLuminance(effectiveBackground(document.querySelector(".ug-panel"))) * 1000) / 1000,
+			card: Math.round(relLuminance(effectiveBackground(document.querySelector(".ug-kpi__card"))) * 1000) / 1000,
+		},
+	};
+	var node = document.createElement("div");
+	node.id = "ug-layout-diagnostics";
+	node.textContent = JSON.stringify(diagnostics);
+	// 放到视口外：既不影响截图与布局，又能被 headless 的 --dump-dom 读到
+	node.style.cssText = "position:fixed;left:-10000px;top:0;white-space:pre;";
+	document.body.appendChild(node);
+}, 1200);
+</script>
+</body>
+</html>

@@ -1,0 +1,1148 @@
+{
+  "code": 0,
+  "msg": "ok",
+  "generated_at": "2026-10-09 15:02:22.138984",
+  "cached": false,
+  "caliber": {
+    "active_users": "区间重叠法：开通日期 <= 时点 且（未流失 或 流失日期 > 时点）",
+    "churn_rate_denominator": "期初在服",
+    "granularity": "日",
+    "timezone": "Asia/Shanghai",
+    "bucket_aligned": "报表按自然时间桶对齐（周从周一起、月/季度/年从自然起点起）",
+    "churn_date_semantics": "流失日期当天已不在服（在服 = 开通日期 <= 时点 < 流失日期）",
+    "period": {
+      "start": "2026-09-10",
+      "end": "2026-10-09",
+      "label": "2026-09-10 ~ 2026-10-09"
+    }
+  },
+  "data": {
+    "kpi": {
+      "period": {
+        "start": "2026-09-10",
+        "end": "2026-10-09",
+        "label": "2026-09-10 ~ 2026-10-09",
+        "days": 30
+      },
+      "previous_period": {
+        "start": "2026-08-11",
+        "end": "2026-09-09"
+      },
+      "active_users": 4838,
+      "active_users_delta": 7.3,
+      "active_users_begin": 4509,
+      "new_users": 681,
+      "new_users_new": 660,
+      "new_users_winback": 21,
+      "new_users_delta": 86.07,
+      "churned_users": 352,
+      "churned_users_delta": 87.23,
+      "net_growth": 329,
+      "net_growth_delta": 84.83,
+      "avg_active_users": 4639.03,
+      "user_days": 139171,
+      "churn_rate": 7.81,
+      "churn_rate_delta": 3.47,
+      "mrr_new": 285151.95,
+      "mrr_churned": 70408.65,
+      "mrr_net": 214743.3,
+      "mrr_active": 2761697.25,
+      "mrr_net_delta": 128.57,
+      "arpu": 570.83,
+      "ltv_estimate": 7308.96,
+      "avg_lifecycle_days": 228.6
+    },
+    "trend": {
+      "labels": [
+        "09-10",
+        "09-11",
+        "09-12",
+        "09-13",
+        "09-14",
+        "09-15",
+        "09-16",
+        "09-17",
+        "09-18",
+        "09-19",
+        "09-20",
+        "09-21",
+        "09-22",
+        "09-23",
+        "09-24",
+        "09-25",
+        "09-26",
+        "09-27",
+        "09-28",
+        "09-29",
+        "09-30",
+        "10-01",
+        "10-02",
+        "10-03",
+        "10-04",
+        "10-05",
+        "10-06",
+        "10-07",
+        "10-08",
+        "10-09"
+      ],
+      "keys": [
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-12",
+        "2026-09-13",
+        "2026-09-14",
+        "2026-09-15",
+        "2026-09-16",
+        "2026-09-17",
+        "2026-09-18",
+        "2026-09-19",
+        "2026-09-20",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-24",
+        "2026-09-25",
+        "2026-09-26",
+        "2026-09-27",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-03",
+        "2026-10-04",
+        "2026-10-05",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-09"
+      ],
+      "new": [
+        10,
+        9,
+        14,
+        15,
+        15,
+        12,
+        18,
+        18,
+        12,
+        16,
+        16,
+        12,
+        12,
+        12,
+        19,
+        10,
+        12,
+        13,
+        13,
+        12,
+        17,
+        36,
+        54,
+        41,
+        40,
+        48,
+        36,
+        43,
+        49,
+        47
+      ],
+      "churned": [
+        4,
+        4,
+        5,
+        9,
+        9,
+        7,
+        3,
+        10,
+        9,
+        6,
+        6,
+        5,
+        7,
+        6,
+        11,
+        7,
+        5,
+        6,
+        5,
+        7,
+        5,
+        23,
+        17,
+        26,
+        26,
+        24,
+        24,
+        22,
+        21,
+        33
+      ],
+      "net": [
+        6,
+        5,
+        9,
+        6,
+        6,
+        5,
+        15,
+        8,
+        3,
+        10,
+        10,
+        7,
+        5,
+        6,
+        8,
+        3,
+        7,
+        7,
+        8,
+        5,
+        12,
+        13,
+        37,
+        15,
+        14,
+        24,
+        12,
+        21,
+        28,
+        14
+      ],
+      "active": [
+        4515,
+        4520,
+        4529,
+        4535,
+        4541,
+        4546,
+        4561,
+        4569,
+        4572,
+        4582,
+        4592,
+        4599,
+        4604,
+        4610,
+        4618,
+        4621,
+        4628,
+        4635,
+        4643,
+        4648,
+        4660,
+        4673,
+        4710,
+        4725,
+        4739,
+        4763,
+        4775,
+        4796,
+        4824,
+        4838
+      ],
+      "churn_rate": [
+        0.09,
+        0.09,
+        0.11,
+        0.2,
+        0.2,
+        0.15,
+        0.07,
+        0.22,
+        0.2,
+        0.13,
+        0.13,
+        0.11,
+        0.15,
+        0.13,
+        0.24,
+        0.15,
+        0.11,
+        0.13,
+        0.11,
+        0.15,
+        0.11,
+        0.49,
+        0.36,
+        0.55,
+        0.55,
+        0.51,
+        0.5,
+        0.46,
+        0.44,
+        0.68
+      ],
+      "granularity": "日"
+    },
+    "distribution": {
+      "region": [
+        {
+          "key": "华东",
+          "label": "华东",
+          "active": 1276,
+          "new": 167,
+          "churned": 106,
+          "mrr": 725492.75,
+          "share": 26.37
+        },
+        {
+          "key": "华南",
+          "label": "华南",
+          "active": 851,
+          "new": 116,
+          "churned": 52,
+          "mrr": 473103.05,
+          "share": 17.59
+        },
+        {
+          "key": "华北",
+          "label": "华北",
+          "active": 826,
+          "new": 126,
+          "churned": 60,
+          "mrr": 491788.85,
+          "share": 17.07
+        },
+        {
+          "key": "华中",
+          "label": "华中",
+          "active": 637,
+          "new": 86,
+          "churned": 48,
+          "mrr": 377406.65,
+          "share": 13.17
+        },
+        {
+          "key": "西南",
+          "label": "西南",
+          "active": 473,
+          "new": 76,
+          "churned": 32,
+          "mrr": 277772.95,
+          "share": 9.78
+        },
+        {
+          "key": "西北",
+          "label": "西北",
+          "active": 292,
+          "new": 39,
+          "churned": 22,
+          "mrr": 146111.05,
+          "share": 6.04
+        },
+        {
+          "key": "东北",
+          "label": "东北",
+          "active": 288,
+          "new": 42,
+          "churned": 21,
+          "mrr": 171901.15,
+          "share": 5.95
+        },
+        {
+          "key": "海外",
+          "label": "海外",
+          "active": 195,
+          "new": 29,
+          "churned": 11,
+          "mrr": 98120.8,
+          "share": 4.03
+        }
+      ],
+      "province": [
+        {
+          "key": "湖南",
+          "label": "湖南",
+          "active": 215,
+          "new": 34,
+          "churned": 14,
+          "mrr": 128656.75,
+          "share": 4.44
+        },
+        {
+          "key": "河南",
+          "label": "河南",
+          "active": 211,
+          "new": 27,
+          "churned": 20,
+          "mrr": 124427.85,
+          "share": 4.36
+        },
+        {
+          "key": "湖北",
+          "label": "湖北",
+          "active": 211,
+          "new": 25,
+          "churned": 14,
+          "mrr": 124322.05,
+          "share": 4.36
+        },
+        {
+          "key": "海外",
+          "label": "海外",
+          "active": 195,
+          "new": 29,
+          "churned": 11,
+          "mrr": 98120.8,
+          "share": 4.03
+        },
+        {
+          "key": "浙江",
+          "label": "浙江",
+          "active": 187,
+          "new": 25,
+          "churned": 15,
+          "mrr": 102748.8,
+          "share": 3.87
+        },
+        {
+          "key": "广东",
+          "label": "广东",
+          "active": 180,
+          "new": 29,
+          "churned": 10,
+          "mrr": 109220.6,
+          "share": 3.72
+        },
+        {
+          "key": "河北",
+          "label": "河北",
+          "active": 177,
+          "new": 29,
+          "churned": 15,
+          "mrr": 111402.85,
+          "share": 3.66
+        },
+        {
+          "key": "香港",
+          "label": "香港",
+          "active": 177,
+          "new": 21,
+          "churned": 10,
+          "mrr": 84251.0,
+          "share": 3.66
+        },
+        {
+          "key": "天津",
+          "label": "天津",
+          "active": 176,
+          "new": 22,
+          "churned": 15,
+          "mrr": 104268.0,
+          "share": 3.64
+        },
+        {
+          "key": "澳门",
+          "label": "澳门",
+          "active": 174,
+          "new": 24,
+          "churned": 18,
+          "mrr": 92757.1,
+          "share": 3.6
+        },
+        {
+          "key": "福建",
+          "label": "福建",
+          "active": 170,
+          "new": 18,
+          "churned": 14,
+          "mrr": 91386.25,
+          "share": 3.51
+        },
+        {
+          "key": "广西",
+          "label": "广西",
+          "active": 166,
+          "new": 22,
+          "churned": 9,
+          "mrr": 86218.05,
+          "share": 3.43
+        },
+        {
+          "key": "内蒙古",
+          "label": "内蒙古",
+          "active": 165,
+          "new": 24,
+          "churned": 10,
+          "mrr": 103993.45,
+          "share": 3.41
+        },
+        {
+          "key": "安徽",
+          "label": "安徽",
+          "active": 161,
+          "new": 23,
+          "churned": 6,
+          "mrr": 81211.3,
+          "share": 3.33
+        },
+        {
+          "key": "山东",
+          "label": "山东",
+          "active": 158,
+          "new": 20,
+          "churned": 10,
+          "mrr": 84771.0,
+          "share": 3.27
+        },
+        {
+          "key": "北京",
+          "label": "北京",
+          "active": 156,
+          "new": 29,
+          "churned": 12,
+          "mrr": 91399.1,
+          "share": 3.22
+        },
+        {
+          "key": "上海",
+          "label": "上海",
+          "active": 155,
+          "new": 21,
+          "churned": 14,
+          "mrr": 80448.5,
+          "share": 3.2
+        },
+        {
+          "key": "台湾",
+          "label": "台湾",
+          "active": 154,
+          "new": 24,
+          "churned": 14,
+          "mrr": 102329.8,
+          "share": 3.18
+        },
+        {
+          "key": "海南",
+          "label": "海南",
+          "active": 154,
+          "new": 20,
+          "churned": 5,
+          "mrr": 100656.3,
+          "share": 3.18
+        },
+        {
+          "key": "山西",
+          "label": "山西",
+          "active": 152,
+          "new": 22,
+          "churned": 8,
+          "mrr": 80725.45,
+          "share": 3.14
+        },
+        {
+          "key": "江苏",
+          "label": "江苏",
+          "active": 148,
+          "new": 16,
+          "churned": 21,
+          "mrr": 97666.4,
+          "share": 3.06
+        },
+        {
+          "key": "江西",
+          "label": "江西",
+          "active": 143,
+          "new": 20,
+          "churned": 12,
+          "mrr": 84930.7,
+          "share": 2.96
+        },
+        {
+          "key": "辽宁",
+          "label": "辽宁",
+          "active": 109,
+          "new": 18,
+          "churned": 4,
+          "mrr": 55651.05,
+          "share": 2.25
+        },
+        {
+          "key": "四川",
+          "label": "四川",
+          "active": 108,
+          "new": 19,
+          "churned": 6,
+          "mrr": 69091.25,
+          "share": 2.23
+        },
+        {
+          "key": "吉林",
+          "label": "吉林",
+          "active": 99,
+          "new": 15,
+          "churned": 11,
+          "mrr": 64101.3,
+          "share": 2.05
+        },
+        {
+          "key": "重庆",
+          "label": "重庆",
+          "active": 98,
+          "new": 17,
+          "churned": 9,
+          "mrr": 55847.65,
+          "share": 2.03
+        },
+        {
+          "key": "云南",
+          "label": "云南",
+          "active": 94,
+          "new": 15,
+          "churned": 7,
+          "mrr": 60829.15,
+          "share": 1.94
+        },
+        {
+          "key": "西藏",
+          "label": "西藏",
+          "active": 93,
+          "new": 13,
+          "churned": 5,
+          "mrr": 53271.05,
+          "share": 1.92
+        },
+        {
+          "key": "贵州",
+          "label": "贵州",
+          "active": 80,
+          "new": 12,
+          "churned": 5,
+          "mrr": 38733.85,
+          "share": 1.65
+        },
+        {
+          "key": "黑龙江",
+          "label": "黑龙江",
+          "active": 80,
+          "new": 9,
+          "churned": 6,
+          "mrr": 52148.8,
+          "share": 1.65
+        },
+        {
+          "key": "新疆",
+          "label": "新疆",
+          "active": 69,
+          "new": 6,
+          "churned": 4,
+          "mrr": 41107.4,
+          "share": 1.43
+        },
+        {
+          "key": "甘肃",
+          "label": "甘肃",
+          "active": 67,
+          "new": 11,
+          "churned": 6,
+          "mrr": 28893.8,
+          "share": 1.38
+        },
+        {
+          "key": "青海",
+          "label": "青海",
+          "active": 54,
+          "new": 9,
+          "churned": 5,
+          "mrr": 18846.2,
+          "share": 1.12
+        },
+        {
+          "key": "宁夏",
+          "label": "宁夏",
+          "active": 53,
+          "new": 8,
+          "churned": 3,
+          "mrr": 31395.25,
+          "share": 1.1
+        },
+        {
+          "key": "陕西",
+          "label": "陕西",
+          "active": 49,
+          "new": 5,
+          "churned": 4,
+          "mrr": 25868.4,
+          "share": 1.01
+        }
+      ],
+      "channel": [
+        {
+          "key": "官网直销",
+          "label": "官网直销",
+          "active": 670,
+          "new": 100,
+          "churned": 57,
+          "mrr": 385745.3,
+          "share": 13.85
+        },
+        {
+          "key": "老客推荐",
+          "label": "老客推荐",
+          "active": 669,
+          "new": 71,
+          "churned": 36,
+          "mrr": 340641.2,
+          "share": 13.83
+        },
+        {
+          "key": "搜索广告",
+          "label": "搜索广告",
+          "active": 587,
+          "new": 106,
+          "churned": 53,
+          "mrr": 353298.35,
+          "share": 12.13
+        },
+        {
+          "key": "信息流",
+          "label": "信息流",
+          "active": 570,
+          "new": 83,
+          "churned": 59,
+          "mrr": 347559.25,
+          "share": 11.78
+        },
+        {
+          "key": "内容营销",
+          "label": "内容营销",
+          "active": 567,
+          "new": 74,
+          "churned": 32,
+          "mrr": 324028.35,
+          "share": 11.72
+        },
+        {
+          "key": "自然流量",
+          "label": "自然流量",
+          "active": 566,
+          "new": 60,
+          "churned": 43,
+          "mrr": 306350.4,
+          "share": 11.7
+        },
+        {
+          "key": "合作伙伴",
+          "label": "合作伙伴",
+          "active": 525,
+          "new": 78,
+          "churned": 29,
+          "mrr": 307001.75,
+          "share": 10.85
+        },
+        {
+          "key": "代理商",
+          "label": "代理商",
+          "active": 404,
+          "new": 70,
+          "churned": 23,
+          "mrr": 243497.3,
+          "share": 8.35
+        },
+        {
+          "key": "线下活动",
+          "label": "线下活动",
+          "active": 280,
+          "new": 39,
+          "churned": 20,
+          "mrr": 153575.35,
+          "share": 5.79
+        }
+      ],
+      "plan": [
+        {
+          "key": "基础版",
+          "label": "基础版",
+          "active": 1268,
+          "new": 179,
+          "churned": 81,
+          "mrr": 118255.5,
+          "share": 26.21
+        },
+        {
+          "key": "专业版",
+          "label": "专业版",
+          "active": 1225,
+          "new": 151,
+          "churned": 67,
+          "mrr": 345255.3,
+          "share": 25.32
+        },
+        {
+          "key": "企业版",
+          "label": "企业版",
+          "active": 921,
+          "new": 98,
+          "churned": 29,
+          "mrr": 784017.9,
+          "share": 19.04
+        },
+        {
+          "key": "免费试用",
+          "label": "免费试用",
+          "active": 862,
+          "new": 198,
+          "churned": 165,
+          "mrr": 0.0,
+          "share": 17.82
+        },
+        {
+          "key": "旗舰版",
+          "label": "旗舰版",
+          "active": 403,
+          "new": 41,
+          "churned": 10,
+          "mrr": 761319.15,
+          "share": 8.33
+        },
+        {
+          "key": "定制版",
+          "label": "定制版",
+          "active": 159,
+          "new": 14,
+          "churned": 0,
+          "mrr": 752849.4,
+          "share": 3.29
+        }
+      ],
+      "user_type": [
+        {
+          "key": "个人",
+          "label": "个人",
+          "active": 1897,
+          "new": 267,
+          "churned": 164,
+          "mrr": 1123719.1,
+          "share": 39.21
+        },
+        {
+          "key": "企业",
+          "label": "企业",
+          "active": 1491,
+          "new": 203,
+          "churned": 87,
+          "mrr": 797357.65,
+          "share": 30.82
+        },
+        {
+          "key": "团队",
+          "label": "团队",
+          "active": 1450,
+          "new": 211,
+          "churned": 101,
+          "mrr": 840620.5,
+          "share": 29.97
+        }
+      ]
+    },
+    "churn_reasons": [
+      {
+        "key": "试用结束",
+        "label": "试用结束",
+        "count": 146,
+        "mrr": 3275.3,
+        "share": 41.48,
+        "avg_lifecycle": 191.5,
+        "recoverable_ratio": 100.0
+      },
+      {
+        "key": "价格因素",
+        "label": "价格因素",
+        "count": 50,
+        "mrr": 14346.65,
+        "share": 14.2,
+        "avg_lifecycle": 269.0,
+        "recoverable_ratio": 100.0
+      },
+      {
+        "key": "功能不满足",
+        "label": "功能不满足",
+        "count": 42,
+        "mrr": 14340.2,
+        "share": 11.93,
+        "avg_lifecycle": 264.0,
+        "recoverable_ratio": 100.0
+      },
+      {
+        "key": "竞品替换",
+        "label": "竞品替换",
+        "count": 29,
+        "mrr": 9806.5,
+        "share": 8.24,
+        "avg_lifecycle": 272.6,
+        "recoverable_ratio": 27.6
+      },
+      {
+        "key": "需求变化",
+        "label": "需求变化",
+        "count": 28,
+        "mrr": 8930.8,
+        "share": 7.95,
+        "avg_lifecycle": 247.2,
+        "recoverable_ratio": 25.0
+      },
+      {
+        "key": "服务体验",
+        "label": "服务体验",
+        "count": 27,
+        "mrr": 11279.45,
+        "share": 7.67,
+        "avg_lifecycle": 233.3,
+        "recoverable_ratio": 100.0
+      },
+      {
+        "key": "公司经营",
+        "label": "公司经营",
+        "count": 12,
+        "mrr": 3240.6,
+        "share": 3.41,
+        "avg_lifecycle": 216.8,
+        "recoverable_ratio": 33.3
+      },
+      {
+        "key": "预算削减",
+        "label": "预算削减",
+        "count": 12,
+        "mrr": 2623.85,
+        "share": 3.41,
+        "avg_lifecycle": 302.9,
+        "recoverable_ratio": 100.0
+      },
+      {
+        "key": "其他",
+        "label": "其他",
+        "count": 6,
+        "mrr": 2565.3,
+        "share": 1.7,
+        "avg_lifecycle": 101.3,
+        "recoverable_ratio": 100.0
+      }
+    ],
+    "top_accounts": [
+      {
+        "name": "USR-2026-05545",
+        "user_id": "U0005420",
+        "user_name": "瑞泰**",
+        "plan": "定制版",
+        "region": "西北",
+        "province": "宁夏",
+        "mrr": 4999.0,
+        "health_score": 58,
+        "risk_level": "高",
+        "days_to_expiry": 49,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2025-01231",
+        "user_id": "U0001226",
+        "user_name": "远航**",
+        "plan": "定制版",
+        "region": "东北",
+        "province": "吉林",
+        "mrr": 4749.05,
+        "health_score": 62,
+        "risk_level": "中",
+        "days_to_expiry": -536,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2025-02164",
+        "user_id": "U0002138",
+        "user_name": "瑞泰**",
+        "plan": "定制版",
+        "region": "华东",
+        "province": "台湾",
+        "mrr": 4999.0,
+        "health_score": 65,
+        "risk_level": "中",
+        "days_to_expiry": -304,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2026-04186",
+        "user_id": "U0004112",
+        "user_name": "星辰**",
+        "plan": "定制版",
+        "region": "华北",
+        "province": "河北",
+        "mrr": 4999.0,
+        "health_score": 66,
+        "risk_level": "中",
+        "days_to_expiry": -185,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2026-06842",
+        "user_id": "U0006691",
+        "user_name": "智联**",
+        "plan": "定制版",
+        "region": "华中",
+        "province": "湖南",
+        "mrr": 4999.0,
+        "health_score": 66,
+        "risk_level": "中",
+        "days_to_expiry": -34,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2025-02308",
+        "user_id": "U0002277",
+        "user_name": "云图**",
+        "plan": "定制版",
+        "region": "华北",
+        "province": "北京",
+        "mrr": 4999.0,
+        "health_score": 67,
+        "risk_level": "中",
+        "days_to_expiry": -405,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2026-07796",
+        "user_id": "U0007638",
+        "user_name": "瑞泰**",
+        "plan": "定制版",
+        "region": "华北",
+        "province": "天津",
+        "mrr": 4499.1,
+        "health_score": 64,
+        "risk_level": "中",
+        "days_to_expiry": 24,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      },
+      {
+        "name": "USR-2025-01710",
+        "user_id": "U0001691",
+        "user_name": "远航**",
+        "plan": "定制版",
+        "region": "华北",
+        "province": "河北",
+        "mrr": 4749.05,
+        "health_score": 66,
+        "risk_level": "中",
+        "days_to_expiry": -429,
+        "lifecycle_seq": 1,
+        "account_owner": "Administrator"
+      }
+    ],
+    "events": [
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "云从**",
+        "plan": "基础版",
+        "region": "华东",
+        "mrr": 99.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "云图**",
+        "plan": "专业版",
+        "region": "华中",
+        "mrr": 239.2
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "恒远**",
+        "plan": "免费试用",
+        "region": "华东",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "慧通**",
+        "plan": "旗舰版",
+        "region": "东北",
+        "mrr": 1599.2
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "易联**",
+        "plan": "免费试用",
+        "region": "华东",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "聚龙**",
+        "plan": "免费试用",
+        "region": "东北",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "青云**",
+        "plan": "免费试用",
+        "region": "华中",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "金桥**",
+        "plan": "免费试用",
+        "region": "华南",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "青云***",
+        "plan": "专业版",
+        "region": "华南",
+        "mrr": 299.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "天成**",
+        "plan": "专业版",
+        "region": "华北",
+        "mrr": 269.1
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "流失",
+        "user_name": "博远**",
+        "plan": "免费试用",
+        "region": "华南",
+        "mrr": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "kind": "开通",
+        "user_name": "融创**",
+        "plan": "专业版",
+        "region": "华北",
+        "mrr": 239.2
+      }
+    ],
+    "filters": {
+      "preset": "近30天",
+      "start": "2026-09-10",
+      "end": "2026-10-09",
+      "granularity": "日",
+      "region": [],
+      "plan": [],
+      "acquisition_channel": []
+    }
+  }
+}

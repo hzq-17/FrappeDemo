@@ -1,0 +1,686 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-10-09 09:00:00.000000",
+ "description": "用户服务开通 / 流失信息单据：一行代表一个客户的一段服务生命周期（开通 → 流失），支持唤回产生第二段生命周期。",
+ "docstatus": 0,
+ "doctype": "DocType",
+ "documentation": "docs/03-详细设计文档.md#62-主-doctypeuser-service-record用户服务记录",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sb_basic",
+  "user_id",
+  "user_name",
+  "cb_basic",
+  "user_type",
+  "segment",
+  "industry",
+  "sb_region",
+  "country",
+  "province",
+  "cb_region",
+  "city",
+  "region",
+  "sb_channel",
+  "acquisition_channel",
+  "source_detail",
+  "cb_channel",
+  "campaign",
+  "partner_name",
+  "is_paid_acquisition",
+  "tab_service",
+  "sb_plan",
+  "plan",
+  "plan_tier",
+  "cb_plan",
+  "billing_cycle",
+  "seats",
+  "sb_money",
+  "list_price",
+  "discount_percent",
+  "cb_money",
+  "contract_amount",
+  "mrr",
+  "sb_money2",
+  "is_paid",
+  "auto_renew",
+  "cb_money2",
+  "currency",
+  "tab_lifecycle",
+  "sb_lifecycle",
+  "lifecycle_seq",
+  "first_activation_date",
+  "cb_lifecycle",
+  "activation_date",
+  "service_start_date",
+  "sb_lifecycle2",
+  "last_renewal_date",
+  "expiry_date",
+  "cb_lifecycle2",
+  "churn_date",
+  "is_paused",
+  "sb_lifecycle3",
+  "status",
+  "lifecycle_days",
+  "cb_lifecycle3",
+  "days_to_expiry",
+  "is_new_customer",
+  "is_winback",
+  "previous_churn_date",
+  "sb_churn",
+  "churn_type",
+  "churn_reason_category",
+  "cb_churn",
+  "competitor",
+  "churn_reason",
+  "sb_winback",
+  "is_recoverable",
+  "health_score",
+  "cb_winback",
+  "risk_level",
+  "winback_owner",
+  "winback_note",
+  "tab_other",
+  "sb_other",
+  "account_owner",
+  "data_source",
+  "cb_other",
+  "source_batch",
+  "ticket_ref",
+  "sb_remark",
+  "remark",
+  "attachment"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "记录编号系列",
+   "options": "USR-.YYYY.-",
+   "default": "USR-.YYYY.-",
+   "hidden": 1,
+   "reqd": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "sb_basic",
+   "fieldtype": "Section Break",
+   "label": "用户信息"
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Data",
+   "label": "用户标识",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "客户/账号的客观唯一标识，同一客户的多段生命周期共用该标识"
+  },
+  {
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "label": "用户名称",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "客户名称（列表与大屏展示时会按规则脱敏）"
+  },
+  {
+   "fieldname": "cb_basic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user_type",
+   "fieldtype": "Select",
+   "label": "用户类型",
+   "options": "个人\n团队\n企业",
+   "default": "个人",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "segment",
+   "fieldtype": "Select",
+   "label": "客户分层",
+   "options": "小微\n中小\n中大型\n战略客户",
+   "default": "小微",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "industry",
+   "fieldtype": "Select",
+   "label": "所属行业",
+   "options": "\n互联网/软件\n制造业\n金融\n教育\n医疗健康\n零售电商\n物流运输\n政府公共\n其他"
+  },
+  {
+   "fieldname": "sb_region",
+   "fieldtype": "Section Break",
+   "label": "归属地域"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Select",
+   "label": "国家/地区",
+   "options": "中国\n海外",
+   "default": "中国",
+   "reqd": 1
+  },
+  {
+   "fieldname": "province",
+   "fieldtype": "Select",
+   "label": "省份",
+   "options": "\n北京\n天津\n河北\n山西\n内蒙古\n辽宁\n吉林\n黑龙江\n上海\n江苏\n浙江\n安徽\n福建\n江西\n山东\n河南\n湖北\n湖南\n广东\n广西\n海南\n重庆\n四川\n贵州\n云南\n西藏\n陕西\n甘肃\n青海\n宁夏\n新疆\n台湾\n香港\n澳门\n海外",
+   "reqd": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "选择省份后系统会自动带出大区"
+  },
+  {
+   "fieldname": "cb_region",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "城市"
+  },
+  {
+   "fieldname": "region",
+   "fieldtype": "Select",
+   "label": "大区",
+   "options": "华东\n华北\n华南\n华中\n西南\n西北\n东北\n海外",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "description": "由省份自动推导，不接受手工修改"
+  },
+  {
+   "fieldname": "sb_channel",
+   "fieldtype": "Section Break",
+   "label": "获客渠道"
+  },
+  {
+   "fieldname": "acquisition_channel",
+   "fieldtype": "Select",
+   "label": "获客渠道",
+   "options": "官网直销\n内容营销\n搜索广告\n信息流\n合作伙伴\n代理商\n线下活动\n老客推荐\n自然流量",
+   "default": "官网直销",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "source_detail",
+   "fieldtype": "Data",
+   "label": "细分来源",
+   "description": "如「知乎专栏」「SEM-品牌词」"
+  },
+  {
+   "fieldname": "cb_channel",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "campaign",
+   "fieldtype": "Data",
+   "label": "推广活动"
+  },
+  {
+   "fieldname": "partner_name",
+   "fieldtype": "Data",
+   "label": "合作方/代理商",
+   "depends_on": "eval:in_list(['合作伙伴','代理商'], doc.acquisition_channel)"
+  },
+  {
+   "fieldname": "is_paid_acquisition",
+   "fieldtype": "Check",
+   "label": "付费获客",
+   "default": "0"
+  },
+  {
+   "fieldname": "tab_service",
+   "fieldtype": "Tab Break",
+   "label": "服务与商业"
+  },
+  {
+   "fieldname": "sb_plan",
+   "fieldtype": "Section Break",
+   "label": "套餐与计费"
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Select",
+   "label": "套餐",
+   "options": "免费试用\n基础版\n专业版\n企业版\n旗舰版\n定制版",
+   "default": "基础版",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "plan_tier",
+   "fieldtype": "Select",
+   "label": "套餐档位",
+   "options": "免费版\n标准版\n高端版\n定制版",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_plan",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "billing_cycle",
+   "fieldtype": "Select",
+   "label": "计费周期",
+   "options": "月付\n季付\n半年付\n年付\n多年付\n免费",
+   "default": "月付",
+   "depends_on": "eval:doc.plan != '免费试用'"
+  },
+  {
+   "fieldname": "seats",
+   "fieldtype": "Int",
+   "label": "席位数",
+   "default": "1",
+   "depends_on": "eval:doc.plan != '免费试用'",
+   "description": "账号席位数，仅用于结构分析，不参与金额计算"
+  },
+  {
+   "fieldname": "sb_money",
+   "fieldtype": "Section Break",
+   "label": "金额",
+   "depends_on": "eval:doc.plan != '免费试用'"
+  },
+  {
+   "fieldname": "list_price",
+   "fieldtype": "Currency",
+   "label": "套餐标准月费",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "折扣率",
+   "default": "0",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "cb_money",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contract_amount",
+   "fieldtype": "Currency",
+   "label": "合同金额",
+   "options": "currency",
+   "non_negative": 1,
+   "description": "本次合同的总额；系统据此折算 MRR"
+  },
+  {
+   "fieldname": "mrr",
+   "fieldtype": "Currency",
+   "label": "月度经常性收入 (MRR)",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_money2",
+   "fieldtype": "Section Break",
+   "label": "续费与币种",
+   "depends_on": "eval:doc.plan != '免费试用'"
+  },
+  {
+   "fieldname": "is_paid",
+   "fieldtype": "Check",
+   "label": "付费客户",
+   "read_only": 1
+  },
+  {
+   "fieldname": "auto_renew",
+   "fieldtype": "Check",
+   "label": "自动续费",
+   "default": "1"
+  },
+  {
+   "fieldname": "cb_money2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Select",
+   "label": "币种",
+   "options": "CNY",
+   "default": "CNY",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_lifecycle",
+   "fieldtype": "Tab Break",
+   "label": "生命周期与流失"
+  },
+  {
+   "fieldname": "sb_lifecycle",
+   "fieldtype": "Section Break",
+   "label": "生命周期"
+  },
+  {
+   "fieldname": "lifecycle_seq",
+   "fieldtype": "Int",
+   "label": "生命周期序号",
+   "default": "1",
+   "read_only": 1,
+   "no_copy": 1,
+   "description": "同一客户的第 N 段服务：1 = 首次开通，大于 1 = 流失后唤回"
+  },
+  {
+   "fieldname": "first_activation_date",
+   "fieldtype": "Date",
+   "label": "首次开通日期",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb_lifecycle",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "activation_date",
+   "fieldtype": "Date",
+   "label": "本次开通日期",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "service_start_date",
+   "fieldtype": "Date",
+   "label": "服务生效日期",
+   "description": "可填写将来的计划生效日期"
+  },
+  {
+   "fieldname": "sb_lifecycle2",
+   "fieldtype": "Section Break",
+   "label": "续费与到期"
+  },
+  {
+   "fieldname": "last_renewal_date",
+   "fieldtype": "Date",
+   "label": "上次续费日期"
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "到期日期",
+   "search_index": 1,
+   "description": "用于到期预警与自动状态流转"
+  },
+  {
+   "fieldname": "cb_lifecycle2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "churn_date",
+   "fieldtype": "Date",
+   "label": "流失日期",
+   "search_index": 1,
+   "description": "填写后状态自动流转为「已流失」，流失日期当天视为已不在服"
+  },
+  {
+   "fieldname": "is_paused",
+   "fieldtype": "Check",
+   "label": "暂停服务",
+   "default": "0",
+   "depends_on": "eval:!doc.churn_date"
+  },
+  {
+   "fieldname": "sb_lifecycle3",
+   "fieldtype": "Section Break",
+   "label": "状态与派生信息"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "服务状态",
+   "options": "待生效\n服务中\n已暂停\n已到期\n已流失",
+   "default": "服务中",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "由开通 / 暂停 / 到期 / 流失自动计算"
+  },
+  {
+   "fieldname": "lifecycle_days",
+   "fieldtype": "Int",
+   "label": "生命周期天数",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_lifecycle3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "days_to_expiry",
+   "fieldtype": "Int",
+   "label": "距到期天数",
+   "read_only": 1
+  },
+  {
+   "fieldname": "is_new_customer",
+   "fieldtype": "Check",
+   "label": "是否新客",
+   "read_only": 1
+  },
+  {
+   "fieldname": "is_winback",
+   "fieldtype": "Check",
+   "label": "是否唤回",
+   "read_only": 1
+  },
+  {
+   "fieldname": "previous_churn_date",
+   "fieldtype": "Date",
+   "label": "上次流失日期",
+   "depends_on": "eval:doc.lifecycle_seq > 1"
+  },
+  {
+   "fieldname": "sb_churn",
+   "fieldtype": "Section Break",
+   "label": "流失信息",
+   "depends_on": "eval:doc.churn_date"
+  },
+  {
+   "fieldname": "churn_type",
+   "fieldtype": "Select",
+   "label": "流失类型",
+   "options": "\n主动流失\n被动流失\n自然流失",
+   "mandatory_depends_on": "eval:doc.churn_date",
+   "depends_on": "eval:doc.churn_date"
+  },
+  {
+   "fieldname": "churn_reason_category",
+   "fieldtype": "Select",
+   "label": "流失原因分类",
+   "options": "\n价格因素\n功能不满足\n需求变化\n服务体验\n竞品替换\n试用结束\n预算削减\n公司经营\n其他",
+   "mandatory_depends_on": "eval:doc.churn_date",
+   "search_index": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_churn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "competitor",
+   "fieldtype": "Data",
+   "label": "替换竞品",
+   "depends_on": "eval:doc.churn_reason_category == '竞品替换'",
+   "mandatory_depends_on": "eval:doc.churn_reason_category == '竞品替换'"
+  },
+  {
+   "fieldname": "churn_reason",
+   "fieldtype": "Small Text",
+   "label": "流失原因详述",
+   "depends_on": "eval:doc.churn_date"
+  },
+  {
+   "fieldname": "sb_winback",
+   "fieldtype": "Section Break",
+   "label": "挽回跟进",
+   "depends_on": "eval:doc.churn_date && doc.is_recoverable"
+  },
+  {
+   "fieldname": "is_recoverable",
+   "fieldtype": "Check",
+   "label": "可唤回",
+   "default": "1"
+  },
+  {
+   "fieldname": "health_score",
+   "fieldtype": "Int",
+   "label": "客户健康分",
+   "default": "80",
+   "description": "0~100，越高越健康；低于 60 判定为高流失风险"
+  },
+  {
+   "fieldname": "cb_winback",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "risk_level",
+   "fieldtype": "Select",
+   "label": "流失风险等级",
+   "options": "低\n中\n高",
+   "read_only": 1
+  },
+  {
+   "fieldname": "winback_owner",
+   "fieldtype": "Link",
+   "label": "挽回负责人",
+   "options": "User"
+  },
+  {
+   "fieldname": "winback_note",
+   "fieldtype": "Small Text",
+   "label": "挽回备注"
+  },
+  {
+   "fieldname": "tab_other",
+   "fieldtype": "Tab Break",
+   "label": "备注与协作"
+  },
+  {
+   "fieldname": "sb_other",
+   "fieldtype": "Section Break",
+   "label": "责任与来源"
+  },
+  {
+   "fieldname": "account_owner",
+   "fieldtype": "Link",
+   "label": "服务负责人",
+   "options": "User",
+   "default": "__user"
+  },
+  {
+   "fieldname": "data_source",
+   "fieldtype": "Select",
+   "label": "数据来源",
+   "options": "手工录入\n批量导入\n模拟数据\n接口同步",
+   "default": "手工录入",
+   "reqd": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "cb_other",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "source_batch",
+   "fieldtype": "Data",
+   "label": "导入批次",
+   "description": "批量导入或演示数据生成时写入，便于回滚与追溯"
+  },
+  {
+   "fieldname": "ticket_ref",
+   "fieldtype": "Data",
+   "label": "关联工单号"
+  },
+  {
+   "fieldname": "sb_remark",
+   "fieldtype": "Section Break",
+   "label": "备注与附件"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Text",
+   "label": "备注",
+   "description": "请勿填写个人敏感信息（手机号、身份证号等）"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "相关附件"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 0,
+ "issingle": 0,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-10-09 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Growth Analytics",
+ "name": "User Service Record",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "增长分析师",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "增长观察者"
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "user_id,user_name,plan,segment",
+ "show_title_field_in_link": 1,
+ "sort_field": "activation_date",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "user_name",
+ "track_changes": 1
+}

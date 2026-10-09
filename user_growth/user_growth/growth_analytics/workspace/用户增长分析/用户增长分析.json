@@ -1,0 +1,79 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"ug_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">用户增长分析</span>\",\"col\":12}},{\"id\":\"ug_paragraph\",\"type\":\"paragraph\",\"data\":{\"text\":\"用户服务开通 / 流失信息管理与增长分析：一张单据承载事实，一份报表承载分析，一个大屏承载汇报。\",\"col\":12}},{\"id\":\"ug_spacer\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"ug_card_dashboard\",\"type\":\"card\",\"data\":{\"card_name\":\"增长大屏\",\"col\":4}},{\"id\":\"ug_card_report\",\"type\":\"card\",\"data\":{\"card_name\":\"增长分析\",\"col\":4}},{\"id\":\"ug_card_data\",\"type\":\"card\",\"data\":{\"card_name\":\"数据维护\",\"col\":4}}]",
+ "creation": "2026-10-09 09:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "dashboard-list",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "用户增长分析",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "增长大屏",
+   "link_count": 0,
+   "link_to": "growth-dashboard",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "用户增长与流失分析",
+   "link_count": 0,
+   "link_to": "用户增长与流失分析",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "用户服务记录",
+   "link_count": 0,
+   "link_to": "User Service Record",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-09 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Growth Analytics",
+ "name": "用户增长分析",
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 35.0,
+ "shortcuts": [
+  {
+   "color": "Green",
+   "doc_view": "",
+   "label": "增长大屏",
+   "link_to": "growth-dashboard",
+   "type": "Page"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "",
+   "label": "用户增长与流失分析",
+   "link_to": "用户增长与流失分析",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "用户服务记录",
+   "link_to": "User Service Record",
+   "type": "DocType"
+  }
+ ],
+ "title": "用户增长分析"
+}

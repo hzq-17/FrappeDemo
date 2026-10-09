@@ -1,0 +1,27 @@
+{
+ "content": null,
+ "creation": "2026-10-09 09:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-10-09 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Growth Analytics",
+ "name": "growth-dashboard",
+ "owner": "Administrator",
+ "page_name": "growth-dashboard",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "增长分析师"
+  },
+  {
+   "role": "增长观察者"
+  }
+ ],
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "增长大屏"
+}
